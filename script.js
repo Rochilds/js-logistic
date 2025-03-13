@@ -1,50 +1,68 @@
-// 📦 SIMULADOR DE PEDIDOS PARA JVR LOGÍSTICA 📦
+// Array para almacenar pedidos
+let pedidos = JSON.parse(localStorage.getItem("pedidos")) || [];
 
-// 1️⃣ Array para almacenar pedidos
-let pedidos = [];
+// Función para agregar un pedido
+function agregarPedido(event) {
+    event.preventDefault();
 
-// 2️⃣ Función para agregar un nuevo pedido
-function agregarPedido() {
-    let nombre = prompt("Ingrese el nombre del cliente:");
-    let direccion = prompt("Ingrese la dirección de entrega:");
-    let tipoPaquete = prompt("Ingrese el tipo de paquete (Pequeño / Mediano / Grande):");
+    let cliente = document.getElementById("cliente").value;
+    let direccion = document.getElementById("direccion").value;
+    let producto = document.getElementById("producto").value;
 
-    if (!nombre || !direccion || !tipoPaquete) {
-        alert("❌ Error: Todos los campos son obligatorios.");
+    if (cliente === "" || direccion === "" || producto === "") {
+        alert("Por favor, completa todos los campos.");
         return;
     }
 
-    // Se guarda en un objeto
-    let pedido = {
-        id: pedidos.length + 1,
-        cliente: nombre,
-        direccion: direccion,
-        paquete: tipoPaquete
+    let nuevoPedido = {
+        id: Date.now(),
+        cliente,  // Se corrige 'nombre' por 'cliente'
+        direccion,
+        producto
     };
 
-    pedidos.push(pedido);
-    alert(`✅ Pedido agregado con éxito. ID: ${pedido.id}`);
-    console.log(`Pedido registrado: ${JSON.stringify(pedido)}`);
+    pedidos.push(nuevoPedido);
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+
+    mostrarPedidos();
+    document.getElementById("formPedido").reset(); // Se corrige el ID
 }
 
-// 3️⃣ Función para mostrar todos los pedidos registrados
+// Función para mostrar pedidos en la página
 function mostrarPedidos() {
-    if (pedidos.length === 0) {
-        alert("No hay pedidos registrados.");
-        return;
+    let pedidoList = document.getElementById("listaPedidos"); // Se corrige el ID
+    pedidoList.innerHTML = "";
+
+    pedidos.forEach(pedido => {
+        let div = document.createElement("div");
+        div.classList.add("pedido-item");
+        div.innerHTML = `
+            <p><span>Cliente:</span> ${pedido.cliente}</p>
+            <p><span>Dirección:</span> ${pedido.direccion}</p>
+            <p><span>Producto:</span> ${pedido.producto}</p>
+            <button class="btn btn-danger" onclick="eliminarPedido(${pedido.id})">Eliminar</button>
+        `;
+        pedidoList.appendChild(div);
+    });
+}
+
+// Función para eliminar un pedido
+function eliminarPedido(id) {
+    pedidos = pedidos.filter(pedido => pedido.id !== id);
+    localStorage.setItem("pedidos", JSON.stringify(pedidos));
+    mostrarPedidos();
+}
+
+// Eventos
+document.addEventListener("DOMContentLoaded", function() {
+    let form = document.getElementById("formPedido");
+
+    if (form) {
+        form.addEventListener("submit", agregarPedido);
+    } else {
+        console.error("No se encontró el formulario con ID 'formPedido'");
     }
 
-    let listaPedidos = "📦 Pedidos Registrados 📦\n";
-    pedidos.forEach(pedido => {
-        listaPedidos += `ID: ${pedido.id} | Cliente: ${pedido.cliente} | Dirección: ${pedido.direccion} | Paquete: ${pedido.paquete}\n`;
-    });
+    mostrarPedidos();
+});
 
-    console.log(listaPedidos);
-    alert(listaPedidos);
-}
-
-// 4️⃣ Simulación: Agregar 2 pedidos y luego mostrarlos
-alert("Bienvenido al Simulador de Pedidos de JVR Logística.");
-agregarPedido();
-agregarPedido();
-mostrarPedidos();

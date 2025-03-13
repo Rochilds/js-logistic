@@ -3,12 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Pedidos - JVR Logística</title>
+    <title>Gestión de Pedidos - JVR Logística</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Simulador de Pedidos - JVR Logística</h1>
+    <header>
+        <h1>JVR Logística - Gestión de Pedidos</h1>
+    </header>
     
+    <main>
+        <section id="pedido-form">
+            <h2>Registrar Nuevo Pedido</h2>
+            <form id="formPedido">
+                <label for="cliente">Cliente:</label>
+                <input type="text" id="cliente" required>
+                
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" required>
+                
+                <label for="producto">Producto:</label>
+                <input type="text" id="producto" required>
+                
+                <button type="submit">Agregar Pedido</button>
+            </form>
+        </section>
 
+        <section id="pedidos-lista">
+            <h2>Lista de Pedidos</h2>
+            <ul id="listaPedidos"></ul>
+        </section>
+    </main>
+    
+    <footer>
+        <p>JVR LOGÍSTICA - © 2025 - Todos los derechos reservados</p>
+    </footer>
     
     <script src="script.js"></script>
 </body>
