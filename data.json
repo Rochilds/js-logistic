@@ -1,0 +1,15 @@
+[
+    {
+      "id": 1,
+      "cliente": "Carlos Martínez",
+      "direccion": "Mitre 321, Córdoba",
+      "producto": "SIM Card - Portabilidad"
+    },
+    {
+      "id": 2,
+      "cliente": "Lucía Romero",
+      "direccion": "San Juan 500, Mendoza",
+      "producto": "Paquete Express"
+    }
+  ]
+  
